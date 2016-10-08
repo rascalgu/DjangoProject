@@ -1,0 +1,28 @@
+{% load staticfiles%}
+<html>
+<meta charset="UTF-8">
+<title>Chuck_Blog</title>
+<meta name="keywords" content="django,chuck,blog,python" />
+<meta name="description" content="django+python" />
+<link href="/static/polls/css/styles.css" rel="stylesheet">
+<link href="/static/polls/css/animation.css" rel="stylesheet">
+<!-- 返回顶部调用 begin -->
+<link href="/static/polls/css/lrtk.css" rel="stylesheet" />
+<script type="text/javascript" src="/static/polls/js/jquery.js"></script>
+<script type="text/javascript" src="/static/polls/js/js.js"></script>
+<!-- 返回顶部调用 end-->
+<!--[if lt IE 9]>
+<script src="/static/polls/js/modernizr.js"></script>
+<![endif]-->
+</head>
+
+<body>
+    {% include 'polls/header.html' %}
+    {% block content %}
+    {% endblock%}
+    {% include 'polls/footer.html' %}
+    <!-- jQuery仿腾讯回顶部和建议 代码开始 -->
+    <div id="tbox"> <a id="togbook" href="/e/tool/gbook/?bid=1"></a> <a id="gotop" href="javascript:void(0)"></a> </div>
+    <!-- 代码结束 -->
+</body>
+</html>

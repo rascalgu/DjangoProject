@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    1.字符串string
+    <br>
+    {{string}}
+    <br>
+
+    2.循环列表list
+    <br>
+    {% for i in TutorialList %}
+    {{i}}
+    {% endfor %}
+    <br>
+
+    3.字典就是map 取value
+    <br>
+    {{info_dict.site}}    {{info_dict.content}}
+    <br>
+
+    4.另一种方式展示map  取key value
+    <br>
+    {% for key,value in info_dict.items %}
+    {{ key }}:{{ value}}
+    {% endfor %}
+    <br>
+
+    5.forloop 例子1
+    <br>
+    {% for item in List %}
+    {{ item }}{% if not forloop.last%},{% endif %}
+    {% endfor %}
+    <br>
+
+    6.空列表的判断
+    <br>
+    <ul>
+        {% for athlete in athlete_list %}
+            <li>{{ athlete.name }}</li>
+        {% empty %}
+            <li>抱歉列表为空</li>
+        {% endfor %}
+    </ul>
+    <br>
+
+    7.比较
+    <br>
+    {% if var >= 90 %}
+    成绩优秀，自强学堂你没少去吧！学得不错
+    {% elif var >= 80 %}
+    成绩良好
+    {% elif var >= 70 %}
+    成绩一般
+    {% elif var >= 60 %}
+    需要努力
+    {% else %}
+    不及格啊，大哥！多去自强学堂学习啊！
+    {% endif %}
+    <br>
+
+    8.request用法
+    <br>
+    {{ request.user }}
+    <br>
+    {{ request.path }}
+    <br>
+    {{ request.GET.urlencode }}
+    <br>
+
+    9.用法
+    <br>
+    <a href="{{ request.path }}?{{ request.GET.urlencode }}&delete=1">当前网址加参数 delete</a>
+    <br>
+
+
+</body>
+</html>

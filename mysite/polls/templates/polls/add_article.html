@@ -1,0 +1,41 @@
+{% extends 'polls/base.html' %}
+{% block content %}
+<!--header end-->
+<div id="mainbody" style="background-color: #333333">
+  <div class="blogs">
+    <div class="newlist">
+  <h2>您当前的位置：<a href="/">首页</a>&nbsp;>&nbsp;新增文章</h2>
+
+<ul>
+<form method="get" action="/polls/sub_article">
+    {% csrf_token %}
+    <p>文章标题</p>
+    <div>
+        <select name="article_type" style="height: 20px; width: 120px;">
+            <option selected="selected">请选择文章类型</option>
+            <option value="Python">Python</option>
+            <option value="abouttest">测试相关</option>
+            <option value="mytalk">个人杂谈</option>
+            <option value="diary">偶尔能想起来的日记</option>
+        </select>
+        <input name="article_title" type="text" style="height: 20px;width: 500px;" placeholder="请输入文章标题">
+    </div>
+    <p>文章内容</p>
+    <textarea name="article_editor" rows="55" style="width: 630px;"></textarea>
+    <input type="submit" value="提交" style="margin-left: 300px;width: 60px;height: 20px;">
+</form>
+</ul>
+
+<div class="page">
+    <a title="Total record"><b>38</b></a>
+    <b>1</b><a href="/jstt/index_2.html">2</a>
+    <a href="/jstt/index_2.html">></a>
+    <a href="/jstt/index_2.html">>></a></div>
+</div>
+
+    <!--bloglist end-->
+  </div>
+  <!--blogs end-->
+</div>
+<!--mainbody end-->
+{% endblock content %}
