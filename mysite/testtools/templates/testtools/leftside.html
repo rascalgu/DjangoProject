@@ -1,0 +1,6 @@
+<div id="leftside">
+    {% for intf in category_list %}
+    <a href="/testtools/index/{{intf.category_id}}/">{{intf.category_name}}</a></br>
+    <!--<p>{{ intf.category_name }}</p>-->
+    {% endfor %}
+</div>

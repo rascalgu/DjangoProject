@@ -1,47 +1,33 @@
 {% extends 'testtools/base.html' %}
 {% load staticfiles %}
+
 {% block content %}
 
-
-    <script type="text/javascript">
-        $(function () {
-            $("li").click(function () {
-                var url = $(this).find('a').attr('href');
-                $.ajax({
-                    url: url,
-                    type: "get",
-                    dataType: "text",
-                    success: textSucceed,
-                    error: Error,
-                    async: true
-                });
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#interfacelist li").click(function () {
+            var url = $(this).find('a').attr('href');
+            $.ajax({
+                url: url,
+                type: "get",
+                dataType: "text",
+                success: function(data){
+                        $("#responsedata").html(data);
+                },
+                async: false,
             });
         });
-        //成功
-        function textSucceed(result) {
-            $("#responsedata").val(result);
-        }
-        //错误函数
-        function Error() {
-            alert("Error!!!");
-        }
-    </script>
+    });
+</script>
 
-<div id = "leftside">
+<div id = "mainbody">
 
-    {% for intf in category_list %}
-                <p>{{ intf.category_id }} 和 {{ intf.category_name }}</p>
-                <a href="/testtools/{{ intf.category_id }}/">{{ intf.category_name }}</a>
-    {% endfor %}
-
-</div>
-
-<div id = "rightside">
+<div id="rightside">
     <div id="interfacelist">
         接口列表:
         <ul>
             {% for intf in single_interface_list %}
-            <li>
+            <li id="requestlink ">
                 {{ intf.interface_sn }}
                 {{ intf.interface_name }}
                 {{ intf.request_method }}
@@ -56,7 +42,6 @@
 <textarea id="responsedata" disabled="disabled">
 </textarea>
     </div>
-
     {#清空textarea内容#}
     <input type="button" id="clear" value="清空"/>
     <script type="text/javascript">
@@ -64,5 +49,6 @@
             $("#responsedata").val('');
         })
     </script>
+</div>
 </div>
 {% endblock %}

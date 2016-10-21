@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+import json
 from django.views import generic
 from .models import Intf
 # Create your views here.
@@ -17,11 +19,14 @@ def IntfIndex(request):
     return render(request, 'testtools/intfindex.html',
                   {'category_list': category_list})
 
-def IntfList(request,category_id):
-    single_interface_list = Intf.objects.filter(upper = category_id)
-    return render(request, 'testtools/intfindex.html',
-                  {'single_interface_list':single_interface_list})
+def Index(request):
+    category_list = Intf.objects.filter(upper = 0)
+    return render(request, 'testtools/intfindex.html',{'category_list': category_list})
 
+def IntfList(request,category_id):
+    category_list = Intf.objects.filter(upper = 0)
+    single_interface_list = Intf.objects.filter(upper = category_id)
+    return render(request,'testtools/intfindex.html',{'single_interface_list':single_interface_list,'category_list': category_list})
 
 def DataDesc(request):
     return render(request, 'testtools/datadesc.html')
