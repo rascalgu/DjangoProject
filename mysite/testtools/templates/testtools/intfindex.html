@@ -20,14 +20,13 @@
     });
 </script>
 
-<div id = "mainbody">
-
 <div id="rightside">
     <div id="interfacelist">
         接口列表:
         <ul>
-            {% for intf in single_interface_list %}
+            {% for intf in interface_list %}
             <li id="requestlink ">
+                {{ intf.id}}
                 {{ intf.interface_sn }}
                 {{ intf.interface_name }}
                 {{ intf.request_method }}
@@ -49,6 +48,5 @@
             $("#responsedata").val('');
         })
     </script>
-</div>
 </div>
 {% endblock %}
