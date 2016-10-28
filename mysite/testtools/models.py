@@ -18,7 +18,7 @@ class Intf(models.Model):
     context = models.CharField(max_length=255,null=True,blank=True)
     interface_desc = models.CharField(max_length=255,null=True,blank=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.interface_name
 
 

@@ -9,5 +9,5 @@ urlpatterns = [
     url(r'^intf/datadesc/$', views.DataDesc, name='datadesc'),
 
     url(r'^intf/autodoc/$', views.AutoDoc, name='autodoc'),
-
+    url(r'^intf/autodoc/topdf/$', views.ToPdf, name='topdf'),
 ]

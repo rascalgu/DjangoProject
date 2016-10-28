@@ -4,38 +4,12 @@
 {% block content %}
 <div id = "mainbody">
 <div id = "rightside">
+    <a href="/testtools/intf/autodoc/topdf"><button type="button">生成接口文档</button></a>
+
     <div id = "doclist">
 
     {% for intf in interface_list %}
-        <p><input type="checkbox" name="vehicle" value="Bike" /> {{intf.interface_name}}</p>
-
-        <p>{{intf.interface_sn}}，{{intf.interface_name}}</p>
-        <p>请求url</p>
-        <p>{{intf.request_method}}，{{intf.request_link}}</p>
-        <p>请求参数</p>
-            <table>
-                <tr>
-                    <td>参数名</td><td>参数类型</td><td>必填</td><td>说明</td>
-                </tr>
-                <tr>
-                    <td>1</td><td>2</td><td>3</td><td>4</td>
-                </tr>
-                <tr>
-                    <td>说明</td>
-                </tr>
-            </table>
-        <p>应答参数</p>
-            <table>
-                    <tr>
-                        <td>参数名</td><td>参数类型</td><td>说明</td>
-                    </tr>
-                    <tr>
-                        <td>1</td><td>2</td><td>3</td>
-                    </tr>
-                </table>
-        <p>示例</p>
-            <p>{{intf.request_link}}</p>
-            <p>response</p>
+        <p><input type="checkbox" name="vehicle" value="Bike" /> {{intf.interface_sn}}{{intf.interface_name}}</p>
     {% endfor %}
 
     </div>
