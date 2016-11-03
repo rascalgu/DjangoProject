@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from .models import Intf
+from .models import Category
 from django.db.models import Q
 
 from django.http import HttpResponse
@@ -18,16 +19,22 @@ from reportlab.lib.fonts import addMapping
 import os
 
 def Index(request):
-    category_list = Intf.objects.filter(upper = 0)
+    category_list = Category.objects.filter(Q(x__gte = 0),Q(y = 0))
     return render(request, 'testtools/intfindex.html',{'category_list': category_list})
 
 def IntfList(request,category_id):
-    category_list = Intf.objects.filter(upper = 0)
+    category_list = Category.objects.filter(Q(x__gte = 0),Q(y = 0))
+
     if category_id == '0':
         interface_list = Intf.objects.filter(Q(upper=10000)|Q(upper=50000))
     else:
         interface_list = Intf.objects.filter(upper = category_id)
-    return render(request,'testtools/intfindex.html',{'interface_list':interface_list,'category_list': category_list})
+
+    if (category_id == '10000'):
+            subcategory = Category.objects.filter(Q(x = 1),Q(y__gt = 0))
+    else :
+            subcategory = Category.objects.filter(Q(x = 2),Q(y__gt = 0))
+    return render(request,'testtools/intfindex.html',{'interface_list':interface_list,'category_list': category_list,'subcategory':subcategory})
 
 def DataDesc(request):
     return render(request, 'testtools/datadesc.html')
@@ -51,8 +58,6 @@ def ToPdf(request):
     temp = StringIO()
     p = canvas.Canvas(temp)
 
-
-
     interface_list=Intf.objects.filter(Q(upper=10000)|Q(upper=50000))
     for intf in interface_list:
         p.setFont('hei',16)
@@ -66,6 +71,4 @@ def ToPdf(request):
 
     p.save()
     response.write(temp.getvalue())
-    return response
-
     return response

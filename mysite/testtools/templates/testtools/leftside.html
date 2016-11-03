@@ -1,6 +1,16 @@
 <div id="leftside">
-    {% for intf in category_list %}
-    <a href="/testtools/index/{{intf.category_id}}/">{{intf.category_name}}</a></br>
-    <!--<p>{{ intf.category_name }}</p>-->
+    {% for category in category_list %}
+    <div class="arrow">
+        <li><a href="#"><span></span></a>{{category.category_name}}
+
+            {% for sub in subcategory %}
+            <li>
+                <span></span>{{sub.category_name}}
+            </li>
+            {% endfor%}
+
+        </li>
+        <a href="/testtools/index/{{category.id}}"></a>
+    </div>
     {% endfor %}
 </div>
