@@ -26,7 +26,6 @@ header nav ul li a:hover, #nav_current { color: #fff; background: rgba(20, 20, 2
 .arrow {width: 100px;height: auto;}
 .arrow li{width: 120px;height: 30px;float: left;list-style: none;}
 .arrow span{background: url("../images/doc_sprites.png") 0 0/200px no-repeat; width: 20px;height: 20px;background-position: -47px -37px;position: relative;top:3px;left: 3px;float: left;}
-.arrow a:active{background: url("../images/doc_sprites.png") 0 0/200px no-repeat; width: 20px;height: 20px;background-position: -47px -37px;position: relative;top:10px;left: 103px;float: left;}
 
 #rightside {margin :10px 0px 0px 280px;width:1280px;height:100%;float: left}
 

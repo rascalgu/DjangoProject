@@ -1,16 +1,7 @@
 <div id="leftside">
     {% for category in category_list %}
     <div class="arrow">
-        <li><a href="#"><span></span></a>{{category.category_name}}
-
-            {% for sub in subcategory %}
-            <li>
-                <span></span>{{sub.category_name}}
-            </li>
-            {% endfor%}
-
-        </li>
-        <a href="/testtools/index/{{category.id}}"></a>
+        <li><a href="#"><span></span></a><a href="/testtools/index/{{category.id}}">{{category.category_name}}</a></li>
     </div>
     {% endfor %}
 </div>

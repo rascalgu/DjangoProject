@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from .models import Intf
-from .models import Category
+from .models import Intf,Category,Interface,RequestParam,ResponseParam
 from django.db.models import Q
 
 from django.http import HttpResponse
@@ -18,31 +17,40 @@ from reportlab.lib.fonts import addMapping
 
 import os
 
-def Index(request):
-    category_list = Category.objects.filter(Q(x__gte = 0),Q(y = 0))
-    return render(request, 'testtools/intfindex.html',{'category_list': category_list})
+def findCategoryByAll():
+    category_list = Category.objects.all()
+    return category_list
 
-def IntfList(request,category_id):
-    category_list = Category.objects.filter(Q(x__gte = 0),Q(y = 0))
+def findInterfaceByAll():
+    interface_list = Interface.objects.all()
+    return interface_list
 
-    if category_id == '0':
-        interface_list = Intf.objects.filter(Q(upper=10000)|Q(upper=50000))
+def findInterfaceById(category_id):
+    if category_id == '1':
+        interface_list = Interface.objects.filter(Q(category_id=10000)|Q(category_id=50000))
     else:
-        interface_list = Intf.objects.filter(upper = category_id)
+        interface_list = Interface.objects.filter(category_id = category_id)
+    return interface_list
 
-    if (category_id == '10000'):
-            subcategory = Category.objects.filter(Q(x = 1),Q(y__gt = 0))
-    else :
-            subcategory = Category.objects.filter(Q(x = 2),Q(y__gt = 0))
-    return render(request,'testtools/intfindex.html',{'interface_list':interface_list,'category_list': category_list,'subcategory':subcategory})
+def Interface_Test_Index(request):
+    category_list = findCategoryByAll()
+    interface_list = findInterfaceByAll()
+    return render(request, 'testtools/index.html',{'category_list': category_list,'interface_list':interface_list})
+
+def Interface_Test_List(request,category_id):
+    category_list = findCategoryByAll()
+    interface_list = findInterfaceById(category_id)
+    return render(request,'testtools/index.html',{'interface_list':interface_list,'category_list': category_list})
+
+def AutoDoc(request):
+    category_list = findCategoryByAll()
+    interface_list = findInterfaceByAll()
+    return render(request, 'testtools/autodoc.html',{'category_list':category_list,'interface_list':interface_list})
+
 
 def DataDesc(request):
     return render(request, 'testtools/datadesc.html')
 
-def AutoDoc(request):
-    category_list = Intf.objects.filter(upper = 0)
-    interface_list = Intf.objects.filter(Q(upper=10000)|Q(upper=50000))
-    return render(request, 'testtools/autodoc.html',{'category_list':category_list,'interface_list':interface_list})
 
 def ToPdf(request):
 
@@ -53,20 +61,44 @@ def ToPdf(request):
     addMapping('cjk',0,0,'hei')
 
     response = HttpResponse(content_type='application/pdf')
-    # #response['Content-Disposition'] = 'attachment; filename="大数据交易中心接口文档.pdf"'
+    #response['Content-Disposition'] = 'attachment; filename="大数据交易中心接口文档.pdf"'
 
     temp = StringIO()
     p = canvas.Canvas(temp)
 
-    interface_list=Intf.objects.filter(Q(upper=10000)|Q(upper=50000))
-    for intf in interface_list:
+
+    interface_list=findInterfaceByAll()
+    for interface in interface_list:
         p.setFont('hei',16)
-        p.drawString(50,800,intf.interface_sn)
-        p.drawString(100,800,intf.interface_name)
+        p.leading = 20
+        p.drawString(50,800,interface.interface_sn)
+        p.drawString(100,800,interface.interface_name)
         p.drawString(50,780,"请求方式:")
-        p.drawString(125,780,intf.request_method)
+        p.drawString(125,780,interface.request_method)
         p.drawString(50,760,"请求url:")
-        p.drawString(50,740,intf.request_link)
+        p.drawString(50,740,interface.request_link)
+
+        p.drawString(50,630,"参数名")
+        p.drawString(200,630,"参数类型")
+        p.drawString(280,630,"必填")
+        p.drawString(320,630,"说明")
+
+        request_param_list = RequestParam.objects.filter(interface__id = interface.id)
+        for i in range(len(request_param_list)):
+            p.drawString(50,550+i*20,request_param_list[i].request_param_name)
+            p.drawString(200,550+i*20,request_param_list[i].request_param_type)
+            p.drawString(280,550+i*20,str(request_param_list[i].request_param_isnull))
+            p.drawString(320,550+i*20,request_param_list[i].request_param_desc)
+
+        p.drawString(50,250,"参数名")
+        p.drawString(200,250,"参数类型")
+        p.drawString(400,250,"说明")
+
+        response_param_list = ResponseParam.objects.filter(interface__id = interface.id)
+        for i in range(len(response_param_list)):
+            p.drawString(50,200+i*20,response_param_list[i].response_param_name)
+            p.drawString(200,200+i*20,response_param_list[i].response_param_type)
+            p.drawString(400,200+i*20,response_param_list[i].response_param_desc)
         p.showPage()
 
     p.save()
