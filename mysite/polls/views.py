@@ -17,7 +17,7 @@ from .forms import AddForm
 #     #latest_question_list = Question.objects.order_by('-pub_date')[:5]
 #     latest_question_list = Question.objects.all()
 #     context = {'latest_question_list': latest_question_list}
-#     return render(request, 'polls/index.html', context)
+#     return render(request, 'polls/interface_list.html', context)
 
 def testb(request):
     if request.method == 'POST':  # 当提交表单时
@@ -76,7 +76,7 @@ def sub_article(request):
         return redirect('/polls/'+mytype)
 
 # class IndexView(generic.ListView):
-#     template_name = 'pokks/index.html'
+#     template_name = 'pokks/interface_list.html'
 #     context_object_name = 'latest_question_list'
 #
 #     def get_queryset(self):

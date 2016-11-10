@@ -1,0 +1,85 @@
+{% extends 'testtools/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#interfacelist li").click(function () {
+            var url = $(this).find('a').attr('href');
+            $.ajax({
+                url: url,
+                type: "get",
+                dataType: "text",
+                success: function(data){
+                        $("#responsedata").html(data);
+                },
+                async: true,
+            });
+        });
+    });
+</script>
+
+<div class="rightbody">
+    <div class = "interfacemenu">
+          <nav class="sidenav" data-sidenav data-sidenav-toggle="#sidenav-toggle">
+    <div class="sidenav-brand">橙色导航</div>
+
+	    <div class="sidenav-header">
+	      <a href="#" >新建文件夹</a>
+	      <small>副标题</small>
+	    </div>
+
+        {% for category in category_list %}
+	    <ul class="sidenav-menu">
+	      <li>
+	        <a onclick="getInterfaceList({{category.id}})" href="/testtools/index/{{category.id}}" data-sidenav-dropdown-toggle class="active" >
+	          <span class="sidenav-link-title">{{ category.category_name }}</span>
+	          <span class="sidenav-dropdown-icon show" data-sidenav-dropdown-icon>
+	            <i class="material-icons">arrow_drop_down</i>
+	          </span>
+	          <span class="sidenav-dropdown-icon" data-sidenav-dropdown-icon>
+	            <i class="material-icons">arrow_drop_up</i>
+	          </span>
+	        </a>
+	        <ul class="sidenav-dropdown{{ category.id }}" data-sidenav-dropdown style="display: none">
+	          <li><a href="javascript:;"></a></li>
+	        </ul>
+	      </li>
+	    </ul>
+        {% endfor %}
+	  </nav>
+
+	  <a href="javascript:;" class="toggle" id="sidenav-toggle">
+	    <i class="material-icons">menu</i>
+	  </a>
+  	<script>$('[data-sidenav]').sidenav();</script>
+    </div>
+
+    <div class="interfacelist">
+        接口列表:
+        <ul>
+            {% for intf in interface_list %}
+            <li id="requestlink ">
+                {{ intf.interface_sn }}
+                {{ intf.interface_name }}
+                {{ intf.request_method }}
+                <a href="{% if intf.request_sample %}
+                        {{ intf.request_sample }}
+                    {% else %}
+                        {{ intf.request_link }}
+                    {% endif %}
+                    " target="_blank">
+                    {% if intf.request_sample %}
+                        {{ intf.request_sample }}
+                    {% else %}
+                        {{ intf.request_link }}
+                    {% endif %}
+                </a>
+                {{ intf.interface_desc }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

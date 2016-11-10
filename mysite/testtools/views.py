@@ -14,6 +14,9 @@ from reportlab.lib.utils import simpleSplit
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Paragraph
 from reportlab.lib.fonts import addMapping
+from django.http import HttpResponse
+from django.core import serializers
+import json
 
 import os
 
@@ -25,32 +28,67 @@ def findInterfaceByAll():
     interface_list = Interface.objects.all()
     return interface_list
 
-def findInterfaceById(category_id):
-    if category_id == '1':
-        interface_list = Interface.objects.filter(Q(category_id=10000)|Q(category_id=50000))
-    else:
-        interface_list = Interface.objects.filter(category_id = category_id)
+def findInterfaceListById(category_id):
+    # if category_id == '1':
+    #     interface_list = Interface.objects.filter(Q(category_id=10000)|Q(category_id=50000))
+    # else:
+    interface_list = serializers.serialize("json",Interface.objects.filter(category_id = category_id))
     return interface_list
+
+def findInterfaceDetailById(interface_id):
+    interface_detail = Interface.objects.filter(id = interface_id)
+    return interface_detail
+
+
+
+
+
+
+
+
+
+
+
+
+def Index(request):
+    return  render(request,'testtools/index.html')
 
 def Interface_Test_Index(request):
     category_list = findCategoryByAll()
     interface_list = findInterfaceByAll()
-    return render(request, 'testtools/index.html',{'category_list': category_list,'interface_list':interface_list})
+    return render(request, 'testtools/interface_list.html',{'category_list': category_list,'interface_list':interface_list})
 
 def Interface_Test_List(request,category_id):
     category_list = findCategoryByAll()
-    interface_list = findInterfaceById(category_id)
-    return render(request,'testtools/index.html',{'interface_list':interface_list,'category_list': category_list})
+    interface_list = findInterfaceListById(category_id)
+    return render(request,'testtools/interface_list.html',{'interface_list':interface_list,'category_list': category_list})
 
-def AutoDoc(request):
+def Interface_Test_Detail(request,interface_id):
     category_list = findCategoryByAll()
-    interface_list = findInterfaceByAll()
-    return render(request, 'testtools/autodoc.html',{'category_list':category_list,'interface_list':interface_list})
+    interface_detail = findInterfaceDetailById(interface_id)
+    return render(request,'testtools/interface_detail.html',{'interface_detail':interface_detail,'category_list': category_list})
+
+def Ajax_Interface_List(request,category_id):
+    interface_list = findInterfaceListById(category_id)
+    return HttpResponse(interface_list)
+
+
+
 
 
 def DataDesc(request):
     return render(request, 'testtools/datadesc.html')
 
+
+
+
+
+
+
+def AutoDoc(request):
+    category_list = findCategoryByAll()
+    interface_list = findInterfaceByAll()
+    return render(request, 'testtools/autodoc.html',{'category_list':category_list,'interface_list':interface_list})
 
 def ToPdf(request):
 
