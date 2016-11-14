@@ -4,24 +4,27 @@
 {% block content %}
 
 <div class = "mainbody">
-    <div class="leftbody">
-        <div class="project">
-            <div class="list">
-                <ul>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                </ul>
-            </div>
-        </div>
+    <div>
+        这就是一个首页
+
     </div>
-    <div class = "rightbody">
-        <div class = "login">
-            <button>注册</button>
-            <button>登录</button>
-        </div>
-    </div>
+
+<button type="button"onclick="addproject()">新建项目</button>
+<script>
+function addproject(){
+    var d = dialog({
+        title: '新建项目',
+        content: '<form action="/addproject/" method="get">\
+        项目名称: <input type="text" name="projectname"> <br>\
+        <input type="submit" value="提交">\
+        </form>',
+    });
+    d.addEventListener('close', function () {
+        alert(this.returnValue);
+    });
+    d.show();
+}
+</script>
 </div>
 
 {% endblock %}

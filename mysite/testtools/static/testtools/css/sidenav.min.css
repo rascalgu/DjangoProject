@@ -39,7 +39,7 @@
     color: #FAFAFA;
     font-size: 19.2px;
     line-height: 32px;
-    padding: 16px 24px 15px
+    padding: 15px 18px 15px
 }
 
 .sidenav-header small {
@@ -99,7 +99,6 @@
 
 .sidenav-link-title {
     display: block;
-    padding: 0 16px 0 40px
 }
 
 .sidenav-dropdown {

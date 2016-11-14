@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
-from .models import Intf,Category,Interface,RequestParam,ResponseParam
+from .models import Project,Category,Interface,RequestParam,ResponseParam
 from django.db.models import Q
-
+from django.shortcuts import render
 from django.http import HttpResponse
+from .forms import AddProjectForm
 from reportlab.pdfgen import canvas
 from cStringIO import StringIO
 from reportlab import  rl_config
@@ -16,9 +16,30 @@ from reportlab.platypus import Paragraph
 from reportlab.lib.fonts import addMapping
 from django.http import HttpResponse
 from django.core import serializers
-import json
 
 import os
+
+def findProjectListAll():
+    project_list = Project.objects.all()
+    return project_list
+
+def findInterfaceListByProjectId(project_id):
+    interface_list = serializers.serialize("json",Interface.objects.filter(project_id = project_id))
+    return interface_list
+
+def Project_List(request):
+    project_list = findProjectListAll()
+    return render(request, 'testtools/interface_list.html',{'project_list': project_list})
+
+def Project_List_ById(request,project_id):
+    project_list = findProjectListAll()
+    interface_list = findInterfaceListByProjectId(project_id)
+    return render(request,'testtools/interface_list.html',{'project_list': project_list,'interface_list':interface_list})
+
+def Ajax_Interface_List(request,project_id):
+    interface_list = findInterfaceListByProjectId(project_id)
+    return HttpResponse(interface_list)
+
 
 def findCategoryByAll():
     category_list = Category.objects.all()
@@ -40,39 +61,27 @@ def findInterfaceDetailById(interface_id):
     return interface_detail
 
 
-
-
-
-
-
-
-
-
-
-
 def Index(request):
     return  render(request,'testtools/index.html')
 
-def Interface_Test_Index(request):
-    category_list = findCategoryByAll()
-    interface_list = findInterfaceByAll()
-    return render(request, 'testtools/interface_list.html',{'category_list': category_list,'interface_list':interface_list})
-
-def Interface_Test_List(request,category_id):
-    category_list = findCategoryByAll()
-    interface_list = findInterfaceListById(category_id)
-    return render(request,'testtools/interface_list.html',{'interface_list':interface_list,'category_list': category_list})
 
 def Interface_Test_Detail(request,interface_id):
+    project_list = findProjectListAll()
     category_list = findCategoryByAll()
     interface_detail = findInterfaceDetailById(interface_id)
-    return render(request,'testtools/interface_detail.html',{'interface_detail':interface_detail,'category_list': category_list})
-
-def Ajax_Interface_List(request,category_id):
-    interface_list = findInterfaceListById(category_id)
-    return HttpResponse(interface_list)
+    return render(request,'testtools/interface_detail.html',{'interface_detail':interface_detail,'category_list': category_list,'project_list':project_list})
 
 
+def AddProject(request):
+    if request.method == 'POST':
+        form = AddProjectForm(request.method)
+
+        if form.is_valid():
+            projectname = form.cleaned_data['projectname']
+            return HttpResponse(projectname)
+    else:
+        form = AddProjectForm()
+    return render(request,'testtools/index.html',{'form':form})
 
 
 

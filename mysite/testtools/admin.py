@@ -1,37 +1,20 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from .models import Intf, Category, Interface, RequestParam, ResponseParam
+from .models import Project, Category, Interface, RequestParam, ResponseParam
 
 
 # Register your models here.
-
-class IntfAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('目录id', {'fields': ['category_id']}),
-        ('目录名称', {'fields': ['category_name']}),
-        ('是否有上级菜单', {'fields': ['upper']}),
-        ('备注', {'fields': ['remark']}),
-        ('接口编号', {'fields': ['interface_sn']}),
-        ('接口名称', {'fields': ['interface_name']}),
-        ('请求方式', {'fields': ['request_method']}),
-        ('请求链接', {'fields': ['request_link']}),
-        ('应答数据', {'fields': ['response_data']}),
-        ('示例', {'fields': ['context']}),
-        ('接口描述', {'fields': ['interface_desc']}),
-    ]
-    list_display = (
-        'category_id', 'category_name', 'upper', 'remark', 'interface_sn', 'interface_name', 'request_method',
-        'request_link', 'response_data', 'context', 'interface_desc',)
-    search_fields = ['interface_name']
-
-
-admin.site.register(Intf, IntfAdmin)
-
 
 class InterfaceInline(admin.TabularInline):
     model = Interface
     extra = 1
 
+class ProjectAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('项目名称', {'fields': ['project_name']}),
+    ]
+    search_fields = ['category_name']
+    inlines = [InterfaceInline]
 
 class CategoryAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -100,6 +83,7 @@ class ResponseParamAdmin(admin.ModelAdmin):
     search_fields = ['response_param_name']
 
 
+admin.site.register(Project, ProjectAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Interface, InterfaceAdmin)
 admin.site.register(RequestParam, RequestParamAdmin)

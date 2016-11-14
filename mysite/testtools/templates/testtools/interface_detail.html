@@ -20,6 +20,42 @@
     });
 </script>
 
+<div class="mainbody">
+<div class="leftbody">
+        <nav class="sidenav" data-sidenav data-sidenav-toggle="#sidenav-toggle">
+            <div class="sidenav-brand">项目列表</div>
+
+            <div class="sidenav-header">
+                <a href="javascript:void(0)" class="run" id="demoBtn1">新建项目</a>
+            </div>
+
+            {% for project in project_list %}
+                <ul class="sidenav-menu">
+                    <li>
+                        <a onclick="getInterfaceList({{ project.id }})" href="/testtools/index/{{ project.id }}"
+                           data-sidenav-dropdown-toggle class="active">
+                            <span class="sidenav-link-title">{{ project.project_name }}</span>
+          <span class="sidenav-dropdown-icon show" data-sidenav-dropdown-icon>
+            <i class="material-icons">arrow_drop_down</i>
+          </span>
+          <span class="sidenav-dropdown-icon" data-sidenav-dropdown-icon>
+            <i class="material-icons">arrow_drop_up</i>
+          </span>
+                        </a>
+                        <ul class="sidenav-dropdown{{ project.id }}" data-sidenav-dropdown style="display: none">
+                            <li><a href="javascript:;"></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            {% endfor %}
+        </nav>
+
+        <a href="javascript:;" class="toggle" id="sidenav-toggle">
+            <i class="material-icons">menu</i>
+        </a>
+        <script>$('[data-sidenav]').sidenav();</script>
+
+    </div>
 <div class="rightbody">
     <div id="interfacelist">
         接口详情:
@@ -48,4 +84,6 @@
         })
     </script>
 </div>
+</div>
+
 {% endblock %}
