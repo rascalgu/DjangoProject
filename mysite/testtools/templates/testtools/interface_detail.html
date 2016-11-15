@@ -27,6 +27,11 @@
 
             <div class="sidenav-header">
                 <a href="javascript:void(0)" class="run" id="demoBtn1">新建项目</a>
+
+                <form method = 'post' action="/testtools/project/addproject/">{% csrf_token %}
+                    <input id="project_name" type="text" name="project_name" value="{{ projectname }}">
+                    <input type="submit" value="保存">
+                </form>
             </div>
 
             {% for project in project_list %}

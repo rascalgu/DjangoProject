@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from .models import Project,Category,Interface,RequestParam,ResponseParam
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render,render_to_response,HttpResponseRedirect
 from django.http import HttpResponse
-from .forms import AddProjectForm
+from .forms import ProjectForm
 from reportlab.pdfgen import canvas
 from cStringIO import StringIO
 from reportlab import  rl_config
@@ -74,14 +74,16 @@ def Interface_Test_Detail(request,interface_id):
 
 def AddProject(request):
     if request.method == 'POST':
-        form = AddProjectForm(request.method)
-
+        form = ProjectForm(request.POST)
         if form.is_valid():
-            projectname = form.cleaned_data['projectname']
-            return HttpResponse(projectname)
+            projectname = form.cleaned_data['project_name']
+            project = Project()
+            project.project_name = projectname
+            project.save()
+            return HttpResponseRedirect('/testtools/project/list')
     else:
-        form = AddProjectForm()
-    return render(request,'testtools/index.html',{'form':form})
+        form = ProjectForm()
+    return render(request,'testtools/interface_list.html',{'form':form})
 
 
 

@@ -9,22 +9,4 @@
 
     </div>
 
-<button type="button"onclick="addproject()">新建项目</button>
-<script>
-function addproject(){
-    var d = dialog({
-        title: '新建项目',
-        content: '<form action="/addproject/" method="get">\
-        项目名称: <input type="text" name="projectname"> <br>\
-        <input type="submit" value="提交">\
-        </form>',
-    });
-    d.addEventListener('close', function () {
-        alert(this.returnValue);
-    });
-    d.show();
-}
-</script>
-</div>
-
 {% endblock %}

@@ -26,7 +26,12 @@
             <div class="sidenav-brand">项目列表</div>
 
             <div class="sidenav-header">
-                    <a href="javascript:void(0)" class="run" id="addproject">新建项目</a>
+                    <a href="javascript:void(0)" class="run" id="demoBtn1">新建项目</a>
+
+                <form method = 'post' action="/testtools/project/addproject/">{% csrf_token %}
+                    <input id="project_name" type="text" name="project_name" value="{{ projectname }}">
+                    <input type="submit" value="保存">
+                </form>
             </div>
 
             {% for project in project_list %}
@@ -59,11 +64,9 @@
     <div class="rightbody">
         <div>
             <p>测试三部曲</p>
-            <p>第一步</p>
-            <p>第二部</p>
-            <p>第三步</p>
-            <p>第四步</p>
-            <p>第五步</p>
+            <p>第一步:接口连通性测试</p>
+            <p>第二部:数据字段类型测试</p>
+            <p>第三步:业务场景测试</p>
         </div>
     </div>
 </div>
