@@ -3,7 +3,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    # ex: /polls/
+    # ex: /blogs/
     url(r'^$', views.index, name='index'),
 
     url(r'^article/(?P<blog_body_id>[0-9])/$', views.article, name='article'),
@@ -14,11 +14,11 @@ urlpatterns = [
     url(r'^sub_article/', views.sub_article, name='sub_article'),
 
     # url(r'^$', views.IndexView.as_view(), name='index'),
-    # # ex: /polls/5/
+    # # ex: /blogs/5/
     url(r'^(?P<question_id>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
-    # ex: /polls/5/results/
+    # ex: /blogs/5/results/
     url(r'^(?P<question_id>[0-9]+)/results/$', views.ResultsView.as_view(), name='results'),
-    # ex: /polls/5/vote/
+    # ex: /blogs/5/vote/
     url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
 
     url(r'^testa/', views.testa, name='testa'),

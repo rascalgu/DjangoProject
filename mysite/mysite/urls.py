@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^blogs/', include('blogs.urls', namespace="blogs")),
     url(r'^polls/', include('polls.urls', namespace="polls")),
     url(r'^testtools/', include('testtools.urls', namespace="testtools"))
 

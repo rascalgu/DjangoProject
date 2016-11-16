@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'blogs',
     'polls',
     'testtools',
 ]
@@ -135,6 +136,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     'djangodemo/static',
-    'polls/static/',
+    'blogs/static/',
     'testtools/static/',
 )

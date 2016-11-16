@@ -17,7 +17,7 @@ from .forms import AddForm
 #     #latest_question_list = Question.objects.order_by('-pub_date')[:5]
 #     latest_question_list = Question.objects.all()
 #     context = {'latest_question_list': latest_question_list}
-#     return render(request, 'polls/interface_list.html', context)
+#     return render(request, 'blogs/interface_list.html', context)
 
 def testb(request):
     if request.method == 'POST':  # 当提交表单时
@@ -73,7 +73,7 @@ def sub_article(request):
         body = request.GET['article_editor']
         updb = BlogBody(blog_title=title, blog_body=body, blog_type=mytype, blog_timestamp=time.strftime("%Y-%m-%d %X", time.localtime()), blog_author='茶客大人')
         updb.save()
-        return redirect('/polls/'+mytype)
+        return redirect('/blogs/'+mytype)
 
 # class IndexView(generic.ListView):
 #     template_name = 'pokks/interface_list.html'
@@ -84,7 +84,7 @@ def sub_article(request):
 
 # def detail(request, question_id):
 #     question = get_object_or_404(Question, pk=question_id)
-#     return render(request, 'polls/detail.html', {'question': question})
+#     return render(request, 'blogs/detail.html', {'question': question})
 
 class DetailView(generic.DetailView):
     model = Question
@@ -93,7 +93,7 @@ class DetailView(generic.DetailView):
 
 # def results(request, question_id):
 #     question = get_object_or_404(Question, pk=question_id)
-#     return render(request, 'polls/results.html', {'question': question})
+#     return render(request, 'blogs/results.html', {'question': question})
 
 class ResultsView(generic.DetailView):
     model = Question
@@ -116,4 +116,4 @@ def vote(request, question_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+        return HttpResponseRedirect(reverse('blogs:results', args=(p.id,)))

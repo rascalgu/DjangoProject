@@ -1,0 +1,70 @@
+{% extends 'blogs/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div id="mainbody" xmlns="http://www.w3.org/1999/html">
+  <div class="info">
+    <figure> <img src="/static/blogs/images/art.jpg"  alt="Panama Hat">
+      <figcaption><strong>——恰克·帕拉尼克 《搏击俱乐部》</strong> It's only after we've lost everything that we're free to do anything.</br>
+      只有在失去一切之后，你才能获得做任何事情的自由。</figcaption>
+    </figure>
+    <div class="card">
+      <h1>我的名片</h1>
+      <p>网名：{{ userinfo.nickname }}</p>
+      <p>职业：{{ userinfo.work }}</p>
+      <p>公司：{{ userinfo.company }}</p>
+      <p>Email：{{ userinfo.email }}</p>
+      <ul class="linkmore">
+        <li><a href="#" class="talk" title="给我留言"></a></li>
+        <li><a href="#" class="address" title="联系地址"></a></li>
+        <li><a href="#" class="email" title="给我写信"></a></li>
+        <li><a href="#" class="photos" title="生活照片"></a></li>
+        <li><a href="#" class="heart" title="关注我"></a></li>
+      </ul>
+    </div>
+  </div>
+  <!--info end-->
+  <div class="blank"></div>
+  <div class="blogs">
+    <ul class="bloglist">
+        {% for content in blog_body %}
+      <li>
+        <div class="arrow_box">
+          <div class="ti"></div>
+          <!--三角形-->
+          <div class="ci"></div>
+          <!--圆形-->
+          <h2 class="title"><a href="{% url 'blogs:article' content.id %}" target="_blank">{{ content.blog_title }}</a></h2>
+          <ul class="textinfo">
+            <p> {{ content.blog_body }}</p>
+          </ul>
+          <ul class="details">
+            <li class="icon-time"><a href="#">{{ content.blog_timestamp }}</a></li>
+          </ul>
+        </div>
+        <!--arrow_box end-->
+      </li>
+        {% endfor %}
+    </ul>
+    <!--bloglist end-->
+    <aside>
+      <div class="toppic">
+        <h2>摆设</h2>
+        <ul>
+          <li><a href="/blogs"><img src="/static/blogs/images/k01.jpg" >摆设
+            <p>摆设</p>
+            </a></li>
+          <li><a href="/blogs"><img src="/static/blogs/images/k02.jpg" >摆设
+            <p>摆设</p>
+            </a></li>
+          <li><a href="/blogs"><img src="/static/blogs/images/k03.jpg" >摆设
+            <p>摆设</p>
+            </a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  <!--blogs end-->
+</div>
+<!--mainbody end-->
+{% endblock %}

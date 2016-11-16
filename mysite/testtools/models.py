@@ -62,11 +62,7 @@ class ResponseParam(models.Model):
 class TestScenarios(models.Model):
 
     test_scenario_name = models.CharField(max_length=200, null=True, blank=True)
-    test_scenario_type = (
-        (1, "接口状态测试"),
-        (2, "接口数据类型测试"),
-        (3, "接口上下文测试"),
-    )
+    test_scenario_type = models.IntegerField()
     interface_mapping_result = models.CharField(max_length=200, null=True, blank=True)
     createtime = models.DateTimeField(auto_now_add = True)
     updatetime = models.DateTimeField(auto_now = True)
