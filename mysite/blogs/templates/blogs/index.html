@@ -47,22 +47,23 @@
         {% endfor %}
     </ul>
     <!--bloglist end-->
+
     <aside>
+
       <div class="toppic">
-        <h2>摆设</h2>
+        <h2>分类</h2>
+
         <ul>
-          <li><a href="/blogs"><img src="/static/blogs/images/k01.jpg" >摆设
-            <p>摆设</p>
-            </a></li>
-          <li><a href="/blogs"><img src="/static/blogs/images/k02.jpg" >摆设
-            <p>摆设</p>
-            </a></li>
-          <li><a href="/blogs"><img src="/static/blogs/images/k03.jpg" >摆设
-            <p>摆设</p>
-            </a></li>
+            {% for type in blogtype %}
+          <li><a href="/blogs">{{ type.blog_type }}</a></li>
+                <div><span></span></div>
+             {% endfor %}
+
         </ul>
+
       </div>
     </aside>
+
   </div>
   <!--blogs end-->
 </div>
