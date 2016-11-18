@@ -14,9 +14,13 @@ class UserInfo(models.Model):
 class BlogBody(models.Model):
     blog_title = models.CharField(max_length=50)
     blog_body = models.TextField()
+    blog_typeid = models.IntegerField(null=True, blank=True)
     blog_type = models.CharField(max_length=50)
     blog_timestamp = models.DateTimeField()
     blog_imgurl = models.CharField(max_length=200, null=True, blank=True)
     blog_author = models.CharField(max_length=20)
     def __unicode__(self):
         return self.blog_title
+
+    class Meta:
+            ordering = ['-blog_timestamp']
