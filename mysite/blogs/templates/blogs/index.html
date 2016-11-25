@@ -49,12 +49,12 @@
         <div class="pagination pagination-centered">
             <ul>
                 {% if blog_body.has_previous %}
-                    <li><a href="?page={{ blog_body.previous_page_number }}">前一页</a></li>
+                    <li><a href="/blogs/index/{{ blog_body.previous_page_number }}">前一页</a></li>
                 {% else %}
                     <li class="active"><a>前一页</a></li>
                 {% endif %}
 
-                {% for p in blog_body.painator.page_range %}
+                {% for p in blog_body.painator.page_range_ext %}
                     {%  ifequal p blog_body.number %}
                         <li class="active"><a>{{ p }}</a></li>
                     {% else %}
@@ -63,7 +63,7 @@
                 {% endfor %}
 
                 {% if blog_body.has_next %}
-                    <li><a href="?page={{ blog_body.next_page_number }}">后一页</a></li>
+                    <li><a href="/blogs/index/{{ blog_body.next_page_number }}">后一页</a></li>
                 {% else %}
                     <li class="active"><a>后一页</a></li>
                 {% endif %}

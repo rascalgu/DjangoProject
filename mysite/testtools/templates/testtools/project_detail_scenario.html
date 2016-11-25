@@ -24,10 +24,10 @@
                                         <section class="is">
                                             <div class="leftbody">
                                                 <nav class="sidenav" data-sidenav data-sidenav-toggle="#sidenav-toggle">
-                                                    <div class="sidenav-brand">项目列表</div>
+                                                    <div class="sidenav-brand">项目列表 design from 17素材 </div>
 
                                                     <div class="sidenav-header">
-                                                        <a href="/admin/testtools/project/" target="_blank" class="run" id="demoBtn1">新建项目</a>
+                                                        <a href="/admin/testtools/project/add/" target="_blank" class="run" id="demoBtn1">新建项目</a>
 
                                                         <form method='post'
                                                               action="/testtools/project/addproject/">{% csrf_token %}
@@ -65,13 +65,11 @@
                                                 </a>
                                                 <script>$('[data-sidenav]').sidenav();</script>
                                             </div>
-
-<ul>
-                                                <li><a href="/testtools/project/list/"
-                                                       class="button button-style1">所有项目</a></li><br>
-                                                <li><a href="/testtools/scenario/list/" class="button button-style1">所有场景</a>
-                                                </li>
-                                            </ul>                                        </section>
+                                            <ul>
+                                                <li><a href="/testtools/project/list/" class="button button-style1">所有项目</a></li><br>
+                                                <li><a href="/testtools/scenario/list/" class="button button-style1">所有场景</a></li><br>
+                                            </ul>
+                                        </section>
                                     </div>
                                     <!-- /Sidebar -->
 
@@ -81,28 +79,44 @@
                                     <!-- Content -->
                                     <ul>
                                         <li>
-                                            接口列表<a style="float: right" href="/admin/testtools/interface/add/" target="_blank">添加</a>
-                                        </li>
+                                        {{ project_name }}>>场景列表<a  style="float: right" href="/admin/testtools/testscenarios/add/" target="_blank">添加</a>
+                                    </li>
                                     </ul>
-
                                     <div class="table-list">
                                     <table class="bordered">
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>接口名称</th>
-                                            <th>请求方式</th>
+                                            <th>场景名称</th>
+                                            <th>所有接口</th>
+                                            <th>测试类型</th>
+                                            <th>运行</th>
+                                            <th>状态</th>
+                                            <th>结果</th>
+                                            <th>报告</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
-                                        {% for interface in interface_list %}
+                                        {% for scenario in scenario_list %}
                                         <tr>
-                                            <td>{{ interface.interface_sn }}</td>
-                                            <td>{{ interface.interface_name  }}</td>
-                                            <td>{{ interface.request_method }}</td>
-
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ scenario.test_scenario_name  }}</td>
+                                            <td><a href="#" target="_blank">接口列表</a></td>
                                             <td>
-                                                <a href="/admin/testtools/interface/{{ interface.id }}/change/" target="_blank">编辑</a></td>
+                                                {% if scenario.test_scenario_type == 1 %}
+                                                    接口状态测试
+                                                {% elif scenario.test_scenario_type == 2%}
+                                                    接口数据类型测试
+                                                {% else %}
+                                                    接口上下文测试
+                                                {% endif%}
+                                            </td>
+                                            <td>运行</td>
+                                            <td>未测试/已测试/测试中</td>
+                                            <td>结果:成功/失败</td>
+                                            <td>报告:查看/下载</td>
+                                            <td>
+                                                <a href="/admin/testtools/testscenarios/{{ scenario.id }}/change/" target="_blank">编辑</a></td>
                                         </tr>
                                         {% endfor %}
                                     </table>

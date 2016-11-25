@@ -15,30 +15,29 @@ from django.core.paginator import EmptyPage
 
 
 # Create your views here.
-from django.core.paginator import Paginator
 
-def Index(request):
-    userinfo = UserInfo.objects.first()
-    blog_body = BlogBody.objects.all()[:6]
-    blog_type = BlogBody.objects.values('blog_typeid','blog_type').annotate(count=Count('blog_typeid')).order_by('blog_typeid')
-    return render(request,'blogs/index.html',{'userinfo': userinfo, 'blog_body': blog_body,'blog_type':blog_type})
-
-def article(request, blog_body_id=''):
-    blog_content = BlogBody.objects.get(id=blog_body_id)
-    return render(request, 'blogs/view.html', {'blog_content': blog_content})
-
+# def Index(request):
+#     userinfo = UserInfo.objects.first()
+#     blog_body = BlogBody.objects.all()[:6]
+#     blog_type = BlogBody.objects.values('blog_typeid','blog_type').annotate(count=Count('blog_typeid')).order_by('blog_typeid')
+#     return render(request,'blogs/index.html',{'userinfo': userinfo, 'blog_body': blog_body,'blog_type':blog_type})
 def page_index(request,page_num):
     userinfo = UserInfo.objects.first()
-    blog_body = BlogBody.objects.all()[:6]
-    paginator = JuncheePaginator(blog_body, 6)
-    page_num = request.GET.get('page_num')
+    blog_body = BlogBody.objects.all()
+    blog_type = BlogBody.objects.values('blog_typeid','blog_type').annotate(count=Count('blog_typeid')).order_by('blog_typeid')
+
+    paginator = JuncheePaginator(blog_body,6)
     try:
         blog_body = paginator.page(page_num)
     except PageNotAnInteger:
         blog_body = paginator.page(1)
     except EmptyPage:
         blog_body = paginator.page(paginator.num_pages)
-    return render_to_response('blogs/index.html',{'userinfo': userinfo, 'blog_body': blog_body})
+    return render_to_response('blogs/index.html',{'userinfo': userinfo, 'blog_body': blog_body,'blog_type':blog_type})
+
+def article(request, blog_body_id=''):
+    blog_content = BlogBody.objects.get(id=blog_body_id)
+    return render(request, 'blogs/view.html', {'blog_content': blog_content})
 
 def article(request, blog_body_id=''):
     blog_content = BlogBody.objects.get(id=blog_body_id)

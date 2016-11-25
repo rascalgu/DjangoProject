@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .models import Project,Category,Interface,RequestParam,ResponseParam
+from .models import Project,Category,Interface,RequestParam,ResponseParam,TestScenarios
 from django.db.models import Q
 from django.shortcuts import render,render_to_response,HttpResponseRedirect
 from django.http import HttpResponse
@@ -27,18 +27,15 @@ def findInterfaceListByProjectId(project_id):
     interface_list = serializers.serialize("json",Interface.objects.filter(project_id = project_id))
     return interface_list
 
-def Project_List(request):
-    project_list = findProjectListAll()
-    return render(request, 'testtools/interface_list.html',{'project_list': project_list})
+def findScenarioListByProjectId(project_id):
+    scenario_list = serializers.serialize("json",TestScenarios.objects.filter(project_id = project_id))
+    return scenario_list
 
-def Project_List_ById(request,project_id):
-    project_list = findProjectListAll()
-    interface_list = findInterfaceListByProjectId(project_id)
-    return render(request,'testtools/interface_list.html',{'project_list': project_list,'interface_list':interface_list})
 
-def Ajax_Interface_List(request,project_id):
-    interface_list = findInterfaceListByProjectId(project_id)
-    return HttpResponse(interface_list)
+
+def Ajax_Scenario_List(request,project_id):
+    scenario_list = findScenarioListByProjectId(project_id)
+    return HttpResponse(scenario_list)
 
 
 def findCategoryByAll():
@@ -50,9 +47,6 @@ def findInterfaceByAll():
     return interface_list
 
 def findInterfaceListById(category_id):
-    # if category_id == '1':
-    #     interface_list = Interface.objects.filter(Q(category_id=10000)|Q(category_id=50000))
-    # else:
     interface_list = serializers.serialize("json",Interface.objects.filter(category_id = category_id))
     return interface_list
 
@@ -64,13 +58,53 @@ def findInterfaceDetailById(interface_id):
 def Index(request):
     return  render(request,'testtools/index.html')
 
+def project_list(request):
+    project_list = findProjectListAll()
+    return render(request, 'testtools/project_list.html',{'project_list': project_list})
+
+
+def project_detail_scenario(request,project_id):
+    project_name = Project.objects.get(id = project_id)
+    scenario_list = TestScenarios.objects.filter(project_id = project_id)
+    return render(request, 'testtools/project_detail_scenario.html',{'project_name': project_name,'scenario_list':scenario_list})
+
+def project_detail_interface(request,project_id):
+    project_name = Project.objects.get(id = project_id)
+    interface_list = Interface.objects.filter(project_id = project_id)
+    return render(request, 'testtools/project_detail_interface.html',{'project_name': project_name,'interface_list':interface_list})
+
+
+def scenario_list(request):
+    project_list = findProjectListAll()
+    scenario_list = TestScenarios.objects.all()
+    return render(request, 'testtools/scenario_list.html',{'project_list':project_list,'scenario_list':scenario_list})
+
+def scenario_detail(request,scenario_id):
+    scenario_list = TestScenarios.objects.filter(id = scenario_id)
+    return render(request,'testtools/scenario_detail.html',{'scenario_list':scenario_list})
+
+def interface_list(request):
+    project_list = findProjectListAll()
+    interface_list = Interface.objects.all()
+    return render(request, 'testtools/interface_list.html',{'project_list':project_list,'interface_list':interface_list})
+
+def interface_detail(request,interface_id):
+    interface_list = Interface.objects.filter(id = interface_id)
+    return render(request,'testtools/interface_list.html',{'interface_list':interface_list})
+
 
 def Interface_Test_Detail(request,interface_id):
     project_list = findProjectListAll()
     category_list = findCategoryByAll()
     interface_detail = findInterfaceDetailById(interface_id)
-    return render(request,'testtools/interface_detail.html',{'interface_detail':interface_detail,'category_list': category_list,'project_list':project_list})
+    return render(request,'testtools/new_interface_detail.html',{'interface_detail':interface_detail,'category_list': category_list,'project_list':project_list})
 
+
+def Project_List_ById(request,project_id):
+    project_list = findProjectListAll()
+    scenario_list = findScenarioListByProjectId(project_id)
+    interface_list = findInterfaceListByProjectId(project_id)
+    return render(request,'testtools/project_list.html',{'project_list': project_list,'interface_list':interface_list,'scenario_list':scenario_list})
 
 def AddProject(request):
     if request.method == 'POST':
@@ -83,17 +117,12 @@ def AddProject(request):
             return HttpResponseRedirect('/testtools/project/list')
     else:
         form = ProjectForm()
-    return render(request,'testtools/interface_list.html',{'form':form})
+    return render(request,'testtools/project_list.html',{'form':form})
 
 
 
 def DataDesc(request):
     return render(request, 'testtools/datadesc.html')
-
-
-
-
-
 
 
 def AutoDoc(request):

@@ -27,8 +27,7 @@
                                                     <div class="sidenav-brand">项目列表</div>
 
                                                     <div class="sidenav-header">
-                                                        <a href="/admin/testtools/project/" target="_blank" class="run" id="demoBtn1">新建项目</a>
-
+                                                        <a href="/admin/testtools/project/add/" target="_blank" class="run" id="demoBtn1">新建项目</a>
                                                         <form method='post'
                                                               action="/testtools/project/addproject/">{% csrf_token %}
                                                             <input id="project_name" type="text" name="project_name"
@@ -65,13 +64,13 @@
                                                 </a>
                                                 <script>$('[data-sidenav]').sidenav();</script>
                                             </div>
-
-<ul>
+                                            <ul>
                                                 <li><a href="/testtools/project/list/"
                                                        class="button button-style1">所有项目</a></li><br>
                                                 <li><a href="/testtools/scenario/list/" class="button button-style1">所有场景</a>
                                                 </li>
-                                            </ul>                                        </section>
+                                            </ul>
+                                        </section>
                                     </div>
                                     <!-- /Sidebar -->
 
@@ -79,30 +78,28 @@
                                 <div class="8u skel-cell-important">
 
                                     <!-- Content -->
-                                    <ul>
-                                        <li>
-                                            接口列表<a style="float: right" href="/admin/testtools/interface/add/" target="_blank">添加</a>
-                                        </li>
-                                    </ul>
-
+                                <ul>
+                                    <li>项目列表<a style="float: right" href="/admin/testtools/project/add/" target="_blank">添加</a>
+                                    </li>
+                                </ul>
                                     <div class="table-list">
                                     <table class="bordered">
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>接口名称</th>
-                                            <th>请求方式</th>
+                                            <th>项目名称</th>
+                                            <th>所有场景</th>
+                                            <th>所有接口</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
-                                        {% for interface in interface_list %}
+                                        {% for project in project_list %}
                                         <tr>
-                                            <td>{{ interface.interface_sn }}</td>
-                                            <td>{{ interface.interface_name  }}</td>
-                                            <td>{{ interface.request_method }}</td>
-
-                                            <td>
-                                                <a href="/admin/testtools/interface/{{ interface.id }}/change/" target="_blank">编辑</a></td>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ project.project_name  }}</td>
+                                            <td><a href="/testtools/project/detail/scenario/{{ project.id }}/" target="_blank">场景列表</a></td>
+                                            <td><a href="/testtools/project/detail/interface/{{ project.id }}/" target="_blank">接口列表</a></td>
+                                            <td><a href="/admin/testtools/project/{{ project.id }}/change/" target="_blank">编辑</a></td>
                                         </tr>
                                         {% endfor %}
                                     </table>

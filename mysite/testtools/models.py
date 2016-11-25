@@ -18,7 +18,7 @@ class Category(models.Model):
 
 
 class Interface(models.Model):
-    project = models.ForeignKey(Project,related_name='project_interface',default=1)
+    project = models.ForeignKey(Project,related_name='project_interface')
     category = models.ForeignKey(Category,related_name='category_interface')
 
     interface_sn = models.CharField(max_length=10, null=True, blank=True)
@@ -61,11 +61,13 @@ class ResponseParam(models.Model):
 
 class TestScenarios(models.Model):
 
+    project = models.ForeignKey(Project,related_name='project_testscenarios')
+
     test_scenario_name = models.CharField(max_length=200, null=True, blank=True)
     test_scenario_type = models.IntegerField()
     interface_mapping_result = models.CharField(max_length=200, null=True, blank=True)
-    createtime = models.DateTimeField(auto_now_add = True)
-    updatetime = models.DateTimeField(auto_now = True)
+    createtime = models.DateTimeField( null=True, blank=True,auto_now_add = True)
+    updatetime = models.DateTimeField( null=True, blank=True,auto_now = True)
 
     def __unicode__(self):
         return self.test_scenario_name

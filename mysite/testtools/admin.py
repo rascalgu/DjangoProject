@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from .models import Project, Category, Interface, RequestParam, ResponseParam
+from .models import Project, Category, Interface, RequestParam, ResponseParam,TestScenarios
 
 
 # Register your models here.
@@ -9,12 +9,16 @@ class InterfaceInline(admin.TabularInline):
     model = Interface
     extra = 1
 
+class TestScenariosInline(admin.TabularInline):
+    model = TestScenarios
+    extra = 1
+
 class ProjectAdmin(admin.ModelAdmin):
     fieldsets = [
         ('项目名称', {'fields': ['project_name']}),
     ]
     search_fields = ['category_name']
-    inlines = [InterfaceInline]
+    inlines = [InterfaceInline,TestScenariosInline]
 
 class CategoryAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -76,15 +80,22 @@ class ResponseParamAdmin(admin.ModelAdmin):
         ('应答参数名', {'fields': ['response_param_name']}),
         ('应答参数类型', {'fields': ['response_param_type']}),
         ('应答参数说明', {'fields': ['response_param_desc']}),
-
-
     ]
     list_display = ('response_param_name', 'response_param_type', 'response_param_desc')
     search_fields = ['response_param_name']
 
+class TestScenariosAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('测试场景名称', {'fields': ['test_scenario_name']}),
+        ('测试场景类型', {'fields': ['test_scenario_type']}),
+        ('接口测试对应结果', {'fields': ['interface_mapping_result']}),
+    ]
+    list_display = ('test_scenario_name', 'test_scenario_type', 'interface_mapping_result')
+    search_fields = ['test_scenario_name']
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Interface, InterfaceAdmin)
 admin.site.register(RequestParam, RequestParamAdmin)
 admin.site.register(ResponseParam, ResponseParamAdmin)
+admin.site.register(TestScenarios,TestScenariosAdmin)

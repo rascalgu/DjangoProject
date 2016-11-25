@@ -24,10 +24,10 @@
                                         <section class="is">
                                             <div class="leftbody">
                                                 <nav class="sidenav" data-sidenav data-sidenav-toggle="#sidenav-toggle">
-                                                    <div class="sidenav-brand">项目列表</div>
+                                                    <div class="sidenav-brand">项目列表 design from 17素材 </div>
 
                                                     <div class="sidenav-header">
-                                                        <a href="/admin/testtools/project/" target="_blank" class="run" id="demoBtn1">新建项目</a>
+                                                        <a href="/admin/testtools/project/add/" target="_blank" class="run" id="demoBtn1">新建项目</a>
 
                                                         <form method='post'
                                                               action="/testtools/project/addproject/">{% csrf_token %}
@@ -65,13 +65,11 @@
                                                 </a>
                                                 <script>$('[data-sidenav]').sidenav();</script>
                                             </div>
-
-<ul>
-                                                <li><a href="/testtools/project/list/"
-                                                       class="button button-style1">所有项目</a></li><br>
-                                                <li><a href="/testtools/scenario/list/" class="button button-style1">所有场景</a>
-                                                </li>
-                                            </ul>                                        </section>
+                                            <ul>
+                                                <li><a href="/testtools/project/list/" class="button button-style1">所有项目</a></li><br>
+                                                <li><a href="/testtools/scenario/list/" class="button button-style1">所有场景</a></li><br>
+                                            </ul>
+                                        </section>
                                     </div>
                                     <!-- /Sidebar -->
 
@@ -79,19 +77,13 @@
                                 <div class="8u skel-cell-important">
 
                                     <!-- Content -->
-                                    <ul>
-                                        <li>
-                                            接口列表<a style="float: right" href="/admin/testtools/interface/add/" target="_blank">添加</a>
-                                        </li>
-                                    </ul>
-
+                                    {{ project_name }}>>接口列表<a  style="float: right" href="/admin/testtools/interface/add/" target="_blank">添加</a>
                                     <div class="table-list">
                                     <table class="bordered">
                                         <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>接口名称</th>
-                                            <th>请求方式</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
@@ -99,9 +91,9 @@
                                         <tr>
                                             <td>{{ interface.interface_sn }}</td>
                                             <td>{{ interface.interface_name  }}</td>
-                                            <td>{{ interface.request_method }}</td>
 
                                             <td>
+                                                <a href="/testtools/interface/detail/{{ interface.id  }}/" target="_blank">调试</a>
                                                 <a href="/admin/testtools/interface/{{ interface.id }}/change/" target="_blank">编辑</a></td>
                                         </tr>
                                         {% endfor %}
