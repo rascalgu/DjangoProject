@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from .models import Project,Category,Interface,RequestParam,ResponseParam,TestScenarios
+from django.db.models import Count
 from django.db.models import Q
 from django.shortcuts import render,render_to_response,HttpResponseRedirect
 from django.http import HttpResponse
@@ -59,19 +60,21 @@ def Index(request):
     return  render(request,'testtools/index.html')
 
 def project_list(request):
-    project_list = findProjectListAll()
-    return render(request, 'testtools/project_list.html',{'project_list': project_list})
+    project_list = Project.objects.all()
+    return render(request, 'testtools/project_list.html',{'project_list':project_list})
 
 
 def project_detail_scenario(request,project_id):
+    project_list = findProjectListAll()
     project_name = Project.objects.get(id = project_id)
     scenario_list = TestScenarios.objects.filter(project_id = project_id)
-    return render(request, 'testtools/project_detail_scenario.html',{'project_name': project_name,'scenario_list':scenario_list})
+    return render(request, 'testtools/project_detail_scenario.html',{'project_list':project_list,'project_name': project_name,'scenario_list':scenario_list,'project_id':project_id})
 
 def project_detail_interface(request,project_id):
+    project_list = findProjectListAll()
     project_name = Project.objects.get(id = project_id)
     interface_list = Interface.objects.filter(project_id = project_id)
-    return render(request, 'testtools/project_detail_interface.html',{'project_name': project_name,'interface_list':interface_list})
+    return render(request, 'testtools/project_detail_interface.html',{'project_list':project_list,'project_name': project_name,'interface_list':interface_list,'project_id':project_id})
 
 
 def scenario_list(request):
@@ -80,8 +83,9 @@ def scenario_list(request):
     return render(request, 'testtools/scenario_list.html',{'project_list':project_list,'scenario_list':scenario_list})
 
 def scenario_detail(request,scenario_id):
+    project_list = findProjectListAll()
     scenario_list = TestScenarios.objects.filter(id = scenario_id)
-    return render(request,'testtools/scenario_detail.html',{'scenario_list':scenario_list})
+    return render(request,'testtools/project_detail_scenario.html',{'project_list':project_list,'scenario_list':scenario_list})
 
 def interface_list(request):
     project_list = findProjectListAll()
@@ -96,8 +100,9 @@ def interface_detail(request,interface_id):
 def Interface_Test_Detail(request,interface_id):
     project_list = findProjectListAll()
     category_list = findCategoryByAll()
-    interface_detail = findInterfaceDetailById(interface_id)
-    return render(request,'testtools/new_interface_detail.html',{'interface_detail':interface_detail,'category_list': category_list,'project_list':project_list})
+    interface_detail = Interface.objects.filter(id = interface_id)
+    request_param = RequestParam.objects.filter(interface_id = interface_id)
+    return render(request,'testtools/new_interface_detail.html',{'interface_detail':interface_detail,'category_list': category_list,'project_list':project_list,'request_param':request_param})
 
 
 def Project_List_ById(request,project_id):

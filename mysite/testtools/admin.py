@@ -45,6 +45,7 @@ class ResponseParamInline(admin.TabularInline):
 
 class InterfaceAdmin(admin.ModelAdmin):
     fieldsets = [
+        (None, {'fields': ['project']}),
         (None, {'fields': ['category']}),
         ('接口编号', {'fields': ['interface_sn']}),
         ('接口名称', {'fields': ['interface_name']}),
@@ -86,11 +87,11 @@ class ResponseParamAdmin(admin.ModelAdmin):
 
 class TestScenariosAdmin(admin.ModelAdmin):
     fieldsets = [
+        (None, {'fields': ['project']}),
         ('测试场景名称', {'fields': ['test_scenario_name']}),
-        ('测试场景类型', {'fields': ['test_scenario_type']}),
         ('接口测试对应结果', {'fields': ['interface_mapping_result']}),
     ]
-    list_display = ('test_scenario_name', 'test_scenario_type', 'interface_mapping_result')
+    list_display = ('test_scenario_name', 'test_scenario_type')
     search_fields = ['test_scenario_name']
 
 admin.site.register(Project, ProjectAdmin)

@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^project/detail/interface/(?P<project_id>[0-9]+)/$',views.project_detail_interface,name='project_detail_interface'),
 
     url(r'^project/(?P<project_id>[0-9]+)/$', views.Project_List_ById, name='project_list_byid'),
+
     url(r'^project/list/ajax/(?P<project_id>[0-9]+)/$', views.Ajax_Scenario_List, name='ajax_scenario_list'),
 
     url(r'^scenario/list/$',views.scenario_list,name='scenario_list'),

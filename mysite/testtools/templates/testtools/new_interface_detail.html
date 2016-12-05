@@ -76,39 +76,58 @@
 
                                 </div>
                                 <div class="8u skel-cell-important">
-
                                     <!-- Content -->
-                                    <h3>接口详情:</h3>
-                                    <script type="text/javascript">
-                                        $(document).ready(function () {
-                                            $("#interfacelist li").click(function () {
-                                                var url = $(this).find('a').attr('href');
-                                                $.ajax({
-                                                    url: url,
-                                                    type: "get",
-                                                    dataType: "text",
-                                                    success: function (data) {
-                                                        $("#responsedata").html(data);
-                                                    },
-                                                    async: false,
-                                                });
-                                            });
-                                        });
-                                    </script>
+                                    <h3>接口调试:</h3>
+
+                                    {% for detail in interface_detail %}
                                     <div id="interfacelist">
-                                        <ul>
-                                            {% for detail in interface_detail %}
-                                                <li id="requestlink ">
-                                                    {{ detail.interface_sn }}
-                                                    {{ detail.interface_name }}
-                                                    {{ detail.request_method }}
-                                                    <a id="testAjax" href="{{ detail.request_link }}"
-                                                       target="_blank">{{ detail.request_link }}</a>
-                                                    {{ detail.interface_desc }}
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
+                                        <section class="footer-one">
+                                            <form>
+                                                <div>
+                                                    <div class="row half">
+                                                        <div class="6u">
+                                                            接口名称：{{ detail.interface_name }}
+                                                        </div>
+                                                        <div class="6u">
+                                                            接口编号：{{ detail.interface_sn }}
+                                                        </div>
+                                                        <div class="6u">
+                                                            请求方式：{{ detail.request_method }}
+                                                        </div>
+                                                        <div class="6u">
+                                                            操作：<a href="/admin/testtools/interface/{{ detail.id }}/change/" target="_blank">编辑</a>
+                                                        </div>
+                                                        <div class="12u">
+                                                            请求链接：
+                                                            <input type="text" class="text" name="name" value="{{ detail.request_link }}">
+                                                        </div>
+                                                        {% for param in request_param %}
+                                                        <div class="4u">
+                                                            参数名称：
+                                                            <input required="required" type="text" class="text" name="param-name" value="{{ param.request_param_name }}">
+                                                        </div>
+                                                        <div class="4u">
+                                                            参数类型：
+                                                            <input required="required" type="text" class="text" name="param-type" value="{{ param.request_param_type }}">
+                                                        </div>
+                                                        <div class="4u">
+                                                            参数值：
+                                                            <input required="required" type="text" class="text" name="param-value" value="{{ param.request_param_value }}">
+                                                        </div>
+                                                        {% endfor %}
+                                                        <div class="12u">
+                                                            <ul class="actions">
+                                                                <li>
+                                                                    <input  type="button" class="button button-style1" value="发送" onclick="getRequestResult('{{ detail.request_link }}')">
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </section>
                                     </div>
+                                    {% endfor %}
                                     <div id="response">
 <textarea id="responsedata" disabled="disabled">
 </textarea>

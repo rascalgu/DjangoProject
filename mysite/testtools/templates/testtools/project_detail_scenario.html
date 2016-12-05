@@ -79,7 +79,7 @@
                                     <!-- Content -->
                                     <ul>
                                         <li>
-                                        {{ project_name }}>>场景列表<a  style="float: right" href="/admin/testtools/testscenarios/add/" target="_blank">添加</a>
+                                        {{ project_name }}>>场景列表<a  style="float: right" href="/admin/testtools/project/{{ project_id  }}/change/" target="_blank">添加</a>
                                     </li>
                                     </ul>
                                     <div class="table-list">
@@ -92,7 +92,6 @@
                                             <th>测试类型</th>
                                             <th>运行</th>
                                             <th>状态</th>
-                                            <th>结果</th>
                                             <th>报告</th>
                                             <th>操作</th>
                                         </tr>
@@ -101,19 +100,32 @@
                                         <tr>
                                             <td>{{ forloop.counter }}</td>
                                             <td>{{ scenario.test_scenario_name  }}</td>
-                                            <td><a href="#" target="_blank">接口列表</a></td>
+                                            <td>{{ scenario.interface_mapping_result }}</td>
                                             <td>
                                                 {% if scenario.test_scenario_type == 1 %}
                                                     接口状态测试
-                                                {% elif scenario.test_scenario_type == 2%}
+                                                {% elif scenario.test_scenario_type == 2 %}
                                                     接口数据类型测试
-                                                {% else %}
+                                                {% elif scenario.test_scenario_type == 3 %}
                                                     接口上下文测试
+                                                {% else %}
+                                                    未知错误
                                                 {% endif%}
                                             </td>
                                             <td>运行</td>
-                                            <td>未测试/已测试/测试中</td>
-                                            <td>结果:成功/失败</td>
+                                            <td>
+                                                {% if scenario.state == 0 %}
+                                                    未测试
+                                                {% elif scenario.state == 1 %}
+                                                    测试中
+                                                {% elif scenario.state == 2 %}
+                                                    成功
+                                                {% elif scenario.state == 3 %}
+                                                    失败
+                                                {% else %}
+                                                    未知错误
+                                                {% endif%}
+                                                </td>
                                             <td>报告:查看/下载</td>
                                             <td>
                                                 <a href="/admin/testtools/testscenarios/{{ scenario.id }}/change/" target="_blank">编辑</a></td>

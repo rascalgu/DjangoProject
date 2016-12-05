@@ -97,8 +97,10 @@
                                         <tr>
                                             <td>{{ forloop.counter }}</td>
                                             <td>{{ project.project_name  }}</td>
+
                                             <td><a href="/testtools/project/detail/scenario/{{ project.id }}/" target="_blank">场景列表</a></td>
                                             <td><a href="/testtools/project/detail/interface/{{ project.id }}/" target="_blank">接口列表</a></td>
+
                                             <td><a href="/admin/testtools/project/{{ project.id }}/change/" target="_blank">编辑</a></td>
                                         </tr>
                                         {% endfor %}

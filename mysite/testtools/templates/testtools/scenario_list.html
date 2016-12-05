@@ -88,6 +88,7 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>所属项目</th>
                                             <th>场景名称</th>
                                             <th>相关接口</th>
                                             <th>测试类型</th>
@@ -97,6 +98,7 @@
                                         {% for scenario in scenario_list %}
                                         <tr>
                                             <td>{{ forloop.counter }}</td>
+                                            <td>{{ scenario.project.project_name }}</td>
                                             <td>{{ scenario.test_scenario_name  }}</td>
                                             <td>{{ scenario.interface_mapping_result }}</td>
                                             <td>{% if scenario.test_scenario_type == 1 %}
