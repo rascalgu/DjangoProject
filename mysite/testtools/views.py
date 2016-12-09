@@ -28,14 +28,8 @@ def findInterfaceListByProjectId(project_id):
     interface_list = serializers.serialize("json",Interface.objects.filter(project_id = project_id))
     return interface_list
 
-def findScenarioListByProjectId(project_id):
-    scenario_list = serializers.serialize("json",TestScenarios.objects.filter(project_id = project_id))
-    return scenario_list
-
-
-
 def Ajax_Scenario_List(request,project_id):
-    scenario_list = findScenarioListByProjectId(project_id)
+    scenario_list = serializers.serialize("json",TestScenarios.objects.filter(project_id = project_id))
     return HttpResponse(scenario_list)
 
 
@@ -85,7 +79,87 @@ def scenario_list(request):
 def scenario_detail(request,scenario_id):
     project_list = findProjectListAll()
     scenario_list = TestScenarios.objects.filter(id = scenario_id)
-    return render(request,'testtools/project_detail_scenario.html',{'project_list':project_list,'scenario_list':scenario_list})
+    return render( request,'testtools/project_detail_scenario.html',{'project_list':project_list,'scenario_list':scenario_list})
+
+def ajax_scenario_statetest(request,scenario_id):
+
+    scenario = TestScenarios.objects.get(id = scenario_id)
+    interface_list = scenario.interfaces.all()
+    times = range(len(interface_list))
+
+    threads = []
+
+    for list in interface_list:
+        scenario = TestScenarios.objects.get(id = scenario_id)
+        scenario.state = '1'
+        scenario.save()
+        thread_request_link = list.request_link + '?'
+        thread_request_param= RequestParam.objects.filter(interface_id = list.id)
+
+        thread_param = {}
+        for i in thread_request_param:
+            thread_param[i.request_param_name] = i.request_param_value
+
+        #print thread_request_link
+        #print thread_param
+
+        #调用ThreadFunc实例化的对象，创建所有线程
+        t = StateTestThread(thread_request_link,thread_param)
+        threads.append(t) #加入线程
+        #print threads
+
+    #开始线程
+    for i in times:
+        threads[i].start() #启动线程
+
+    #等待所有结束线程
+    for i in times:
+        threads[i].join()
+
+    interface_state = threads[i].get_result()
+    if interface_state == 0:
+        scenario = TestScenarios.objects.get(id = scenario_id)
+        scenario.state = '2'
+        scenario.save()
+    else:
+        scenario = TestScenarios.objects.get(id = scenario_id)
+        scenario.state = '3'
+        scenario.save()
+
+    scenario_list = serializers.serialize("json",TestScenarios.objects.filter(id = scenario_id))
+    return HttpResponse(scenario_list)
+
+
+import threading,urllib2,urllib,json
+
+class StateTestThread(threading.Thread):
+
+    def __init__(self,url,param):
+        threading.Thread.__init__(self)
+        self.url = url
+        self.param = param
+
+    def run(self):
+        post_data = urllib.urlencode(self.param)
+        response = urllib2.urlopen(self.url, post_data)
+        code = response.getcode()
+        content = response.read()
+        contentjson = json.loads(content)
+        state = contentjson['return_code']
+        if (code == 200) and (state == 0) :
+            self.result = 0
+        else:
+            self.result = 1
+
+    def get_result(self):
+        return self.result
+
+def ajax_scenario_resetstate(request,scenario_id):
+    scenario = TestScenarios.objects.get(id = scenario_id)
+    scenario.state = '0'
+    scenario.save()
+    scenario_list = serializers.serialize("json",TestScenarios.objects.filter(id = scenario_id))
+    return HttpResponse(scenario_list)
 
 def interface_list(request):
     project_list = findProjectListAll()
@@ -124,10 +198,6 @@ def AddProject(request):
         form = ProjectForm()
     return render(request,'testtools/project_list.html',{'form':form})
 
-
-
-def DataDesc(request):
-    return render(request, 'testtools/datadesc.html')
 
 
 def AutoDoc(request):

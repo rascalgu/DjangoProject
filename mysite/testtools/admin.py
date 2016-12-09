@@ -88,8 +88,8 @@ class ResponseParamAdmin(admin.ModelAdmin):
 class TestScenariosAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['project']}),
+        (None, {'fields': ['interfaces']}),
         ('测试场景名称', {'fields': ['test_scenario_name']}),
-        ('接口测试对应结果', {'fields': ['interface_mapping_result']}),
     ]
     list_display = ('test_scenario_name', 'test_scenario_type')
     search_fields = ['test_scenario_name']

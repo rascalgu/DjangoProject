@@ -19,6 +19,8 @@ urlpatterns = [
     url(r'^scenario/list/$',views.scenario_list,name='scenario_list'),
     url(r'^scenario/detail/(?P<scenario_id>[0-9]+)/$',views.scenario_detail,name='scenario_detail'),
 
+    url(r'^scenario/statetest/ajax/(?P<scenario_id>[0-9]+)/$',views.ajax_scenario_statetest,name='ajax_scenario_statetest'),
+    url(r'^scenario/resetstate/ajax/(?P<scenario_id>[0-9]+)/$',views.ajax_scenario_resetstate,name='ajax_scenario_resetstate'),
 
     url(r'^interface/list/$',views.interface_list,name='interface_list'),
     #url(r'^interface/detail/(?P<interface_id>[0-9]+)/$',views.interface_detail,name='interface_detail'),
@@ -27,7 +29,6 @@ urlpatterns = [
 
     url(r'^interface/detail/(?P<interface_id>[0-9]+)/$', views.Interface_Test_Detail, name='interface_test_detail'),
 
-    url(r'^datadesc/$', views.DataDesc, name='datadesc'),
 
     url(r'^intf/autodoc/$', views.AutoDoc, name='autodoc'),
     url(r'^intf/autodoc/topdf/$', views.ToPdf, name='topdf'),

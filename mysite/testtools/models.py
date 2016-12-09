@@ -66,7 +66,7 @@ class ResponseParam(models.Model):
 class TestScenarios(models.Model):
 
     project = models.ForeignKey(Project,related_name='project_testscenarios')
-    interfaces = models.ManyToManyField(Interface)
+    interfaces = models.ManyToManyField(Interface,verbose_name=('相关接口'), related_name='interfaces_testscenarios', blank=True)
 
 
     test_scenario_name = models.CharField(max_length=200, null=True, blank=True,verbose_name='测试场景名称')

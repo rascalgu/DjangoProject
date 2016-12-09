@@ -24,7 +24,7 @@
                                         <section class="is">
                                             <div class="leftbody">
                                                 <nav class="sidenav" data-sidenav data-sidenav-toggle="#sidenav-toggle">
-                                                    <div class="sidenav-brand">项目列表 design from 17素材 </div>
+                                                    <div class="sidenav-brand">项目列表</div>
 
                                                     <div class="sidenav-header">
                                                         <a href="/admin/testtools/project/add/" target="_blank" class="run" id="demoBtn1">新建项目</a>
@@ -88,7 +88,6 @@
                                         <tr>
                                             <th>#</th>
                                             <th>场景名称</th>
-                                            <th>所有接口</th>
                                             <th>测试类型</th>
                                             <th>运行</th>
                                             <th>状态</th>
@@ -100,7 +99,6 @@
                                         <tr>
                                             <td>{{ forloop.counter }}</td>
                                             <td>{{ scenario.test_scenario_name  }}</td>
-                                            <td>{{ scenario.interface_mapping_result }}</td>
                                             <td>
                                                 {% if scenario.test_scenario_type == 1 %}
                                                     接口状态测试
@@ -112,7 +110,10 @@
                                                     未知错误
                                                 {% endif%}
                                             </td>
-                                            <td>运行</td>
+                                            <td>
+                                                <a onclick="runTestScenario({{ scenario.id }},{{ forloop.counter }})" href="javascript:void(0);">运行</a>
+                                                <a onclick="resetTestScenario({{ scenario.id }},{{ forloop.counter }})" href="javascript:void(0);">重置</a>
+                                            </td>
                                             <td>
                                                 {% if scenario.state == 0 %}
                                                     未测试
@@ -123,10 +124,10 @@
                                                 {% elif scenario.state == 3 %}
                                                     失败
                                                 {% else %}
-                                                    未知错误
+                                                    未知状态
                                                 {% endif%}
                                                 </td>
-                                            <td>报告:查看/下载</td>
+                                            <td>查看/下载</td>
                                             <td>
                                                 <a href="/admin/testtools/testscenarios/{{ scenario.id }}/change/" target="_blank">编辑</a></td>
                                         </tr>

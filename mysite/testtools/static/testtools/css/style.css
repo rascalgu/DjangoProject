@@ -228,11 +228,6 @@
 		clear: both;
 	}
 	
-	p, ol, dl, table, blockquote, form
-	{
-		margin-bottom: 2em;
-	}
-	
 	section,
 	article
 	{
