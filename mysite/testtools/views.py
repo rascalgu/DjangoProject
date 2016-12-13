@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from .models import Project,Category,Interface,RequestParam,ResponseParam,TestScenarios
+from .models import Project,Category,Interface,RequestParam,ResponseParam,TestScenarios,Message
 from django.db.models import Count
 from django.db.models import Q
 from django.shortcuts import render,render_to_response,HttpResponseRedirect
 from django.http import HttpResponse
-from .forms import ProjectForm
+from .forms import ProjectForm,MessageForm
 from reportlab.pdfgen import canvas
 from cStringIO import StringIO
 from reportlab import  rl_config
@@ -198,7 +198,23 @@ def AddProject(request):
         form = ProjectForm()
     return render(request,'testtools/project_list.html',{'form':form})
 
+def AddMessage(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            formname = form.cleaned_data['name']
+            formEmail = form.cleaned_data['Email']
+            formmessage = form.cleaned_data['message']
 
+            message = Message()
+            message.name = formname
+            message.Email = formEmail
+            message.message = formmessage
+            message.save()
+            return HttpResponseRedirect('/testtools/project/list')
+    else:
+        form = MessageForm()
+    return render(request,'testtools/project_list.html',{'form':form})
 
 def AutoDoc(request):
     category_list = findCategoryByAll()

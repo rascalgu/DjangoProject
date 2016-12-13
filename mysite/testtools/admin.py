@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from .models import Project, Category, Interface, RequestParam, ResponseParam,TestScenarios
+from .models import Project, Category, Interface, RequestParam, ResponseParam,TestScenarios,Message
 
 
 # Register your models here.
@@ -94,9 +94,19 @@ class TestScenariosAdmin(admin.ModelAdmin):
     list_display = ('test_scenario_name', 'test_scenario_type')
     search_fields = ['test_scenario_name']
 
+class MessageAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('姓名', {'fields': ['name']}),
+        ('Email', {'fields': ['Email']}),
+        ('留言', {'fields': ['message']}),
+    ]
+    list_display = ('name', 'Email','message')
+    search_fields = ['name']
+
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Interface, InterfaceAdmin)
 admin.site.register(RequestParam, RequestParamAdmin)
 admin.site.register(ResponseParam, ResponseParamAdmin)
 admin.site.register(TestScenarios,TestScenariosAdmin)
+admin.site.register(Message,MessageAdmin)

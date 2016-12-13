@@ -80,3 +80,11 @@ class TestScenarios(models.Model):
 
     class Meta:
             ordering = ['-createtime']
+
+class Message(models.Model):
+    name = models.CharField(max_length=50,null=True,blank=True,verbose_name='姓名')
+    Email = models.EmailField(null=True,blank=True)
+    message = models.TextField(null=True,blank=True,verbose_name='留言')
+
+    def __unicode__(self):
+        return self.name

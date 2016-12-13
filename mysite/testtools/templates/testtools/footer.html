@@ -1,7 +1,7 @@
 {% load staticfiles %}
 <!-- Footer Wrapper -->
 <div id="footer-wrapper" class="wrapper">
-    <div class="title">The Rest Of It</div>
+    <div class="title">直言不讳</div>
     <div class="container">
         <div class="row">
             <div class="12u">
@@ -9,10 +9,9 @@
                 <!-- Footer -->
                 <div id="footer">
                     <header class="style1">
-                        <h2>Ipsum sapien elementum portitor?</h2>
                         <p class="byline">
-                            Sed turpis tortor, tincidunt sed ornare in metus porttitor mollis nunc in aliquet.<br/>
-                            Nam pharetra laoreet imperdiet volutpat etiam consequat feugiat.
+                            鼓励自己最好的办法，就是鼓励别人。——马克·吐温<br/>
+                            做一个好听众，鼓励别人说说他们自己。——戴尔·卡耐基
                         </p>
                     </header>
                     <hr/>
@@ -22,21 +21,21 @@
 
                                 <!-- Contact Form -->
                                 <section class="footer-one">
-                                    <form method="post" action="#">
+                                    <form method="post" action="/testtools/project/addmessage/">{% csrf_token %}
                                         <div>
                                             <div class="row half">
                                                 <div class="6u">
-                                                    <input type="text" class="text" name="name" id="contact-name"
+                                                    <input id="name" type="text" class="text" name="name"
                                                            placeholder="名字"/>
                                                 </div>
                                                 <div class="6u">
-                                                    <input type="text" class="text" name="name" id="contact-email"
+                                                    <input id="Email" type="text" class="text" name="Email"
                                                            placeholder="Email"/>
                                                 </div>
                                             </div>
                                             <div class="row half">
                                                 <div class="12u">
-                                                    <textarea name="message" id="contact-message"
+                                                    <textarea name="message" id="message"
                                                               placeholder="请输入留言"></textarea>
                                                 </div>
                                             </div>
@@ -65,7 +64,7 @@
                                             <div class="row">
                                                 <div class="6u">
                                                     <section>
-                                                        <h3 class="fa fa-home">Mailing Address</h3>
+                                                        <h3 class="fa fa-home">公司地址</h3>
                                                         <p>
                                                             浙报传媒集团股份有限公司<br/>
                                                             上海市浦东新区亮景路210号<br/>
@@ -75,10 +74,10 @@
                                                 </div>
                                                 <div class="6u">
                                                     <section>
-                                                        <h3 class="fa fa-comment">Social</h3>
+                                                        <h3 class="fa fa-comment">社交平台</h3>
                                                         <p>
-                                                            <a href="http://weibo.com/u/1674676342?topnav=1&wvr=6&topsug=1&is_all=1">@茶客大人</a><br/>
-                                                            <a href="#">微信:ChuckDaren</a><br/>
+                                                            <a href="http://weibo.com/u/1674676342?topnav=1&wvr=6&topsug=1&is_all=1">微博:@茶客大人</a><br/>
+                                                            <a href="javascript:void(0);">微信:ChuckDaren</a><br/>
                                                         </p>
                                                     </section>
                                                 </div>
@@ -92,14 +91,7 @@
                                                         </p>
                                                     </section>
                                                 </div>
-                                                <div class="6u">
-                                                    <section>
-                                                        <h3 class="fa fa-phone">Phone</h3>
-                                                        <p>
-                                                            13818912894
-                                                        </p>
-                                                    </section>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
